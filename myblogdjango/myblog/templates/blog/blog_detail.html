@@ -1,0 +1,67 @@
+{% load static %}
+<html >
+<head>
+	<title>My blog</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
+
+
+</head>
+<body>
+<div class="shell">
+	<div class="border">
+
+		<div id="navigation">
+			<ul>
+			    <li><a href="#" class="active">Home</a></li>
+			    <li><a href="#">Admin panel</a></li>
+
+			</ul>
+		</div>
+
+		<div id="main">
+			<div id="content" class="left">
+
+				<div class="projects">
+					<h3>{{ post.title }}</h3>
+					<h3>{{ post.heading }}</h3>
+					<div class="item">
+						<div class="text left">
+							<p>{{ post.content }}</p>
+						</div>
+						<div class="cl"></div>
+					</div>
+				</div>
+			</div>
+			<div class="form-comment">
+				<h3>Leave a comment</h3>
+				<div>
+					<form action="{% url 'add_comments' post.id %}" method="post">
+						{% csrf_token %}
+						<div>
+								<label>Your comment</label>
+								<textarea name='content'></textarea>
+
+						</div>
+						<div>
+							<label>User_id*</label>
+							<input type="text" name="user_id">
+						</div>
+						<div>
+							<input type="submit"></div>
+					</form>
+				</div>
+			</div>
+			<div>
+				{% for comment in post.comments_set.all %}
+				<div class="view-comment">
+					<h4>{{ comment.user_id }}</h4>
+					<p>
+						{{ comment.content }}
+					</p>
+				</div>
+				{% endfor%}
+			</div>
+				<div class="cl"></div>
+			</div>
